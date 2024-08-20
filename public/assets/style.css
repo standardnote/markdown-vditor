@@ -1,0 +1,235 @@
+html,
+body {
+	height: 100%;
+	margin: 0;
+}
+
+#vditor.vditor {
+	--border-color: var(--sn-stylekit-border-color, #d1d5da);
+	--second-color: var(--sn-stylekit-neutral-color, rgba(88, 96, 105, 0.36));
+	--panel-background-color: var(--sn-stylekit-secondary-background-color, #fff);
+	--panel-shadow: none;
+	/* --toolbar-background-color: var(--sn-stylekit-contrast-background-color, #f6f8fa); */
+	--toolbar-background-color: transparent;
+	--toolbar-icon-color: var(--sn-stylekit-editor-foreground-color, #586069);
+	--toolbar-icon-hover-color: var(--sn-stylekit-info-color, #4285f4);
+	--textarea-background-color: var(--sn-stylekit-background-color, #fafbfc);
+	--textarea-text-color: var(--sn-stylekit-editor-foreground-color, #24292e);
+	--count-background-color: var(--sn-stylekit-editor-background-color, rgba(27, 31, 35, 0.05));
+	--heading-border-color: var(--sn-stylekit-border-color, #eaecef);
+	--blockquote-color: var(--sn-stylekit-border-color, #6a737d);
+
+	--ir-heading-color: var(--toolbar-icon-color, #660e7a);
+	--ir-title-color: var(--sn-stylekit-success-color, #808080);
+	--ir-bi-color: var(--toolbar-icon-color, #0033b3);
+	--ir-link-color: var(--sn-stylekit-info-color, #4285f4);
+	--ir-bracket-color: var(--sn-stylekit-info-color, #0000ff);
+	--ir-paren-color: var(--sn-stylekit-danger-color, #008000);
+
+	border: none;
+}
+
+#vditor .vditor-menu--disabled,
+#vditor .vditor-toolbar__divider {
+	color: var(--sn-stylekit-editor-foreground-color);
+	opacity: .5;
+}
+
+#vditor .vditor-ir pre.vditor-reset {
+	background-color: transparent;
+}
+
+#vditor .vditor-reset {
+	color: var(--textarea-text-color);
+}
+
+#vditor .vditor-reset h1,
+#vditor .vditor-reset h2 {
+	border-bottom-color: var(--heading-border-color);
+}
+
+#vditor .vditor-reset table td,
+#vditor .vditor-reset table th {
+	border-color: var(--border-color);
+}
+
+#vditor .vditor-reset table tr {
+	background-color: transparent;
+}
+
+#vditor .vditor-reset table tbody tr:nth-child(odd) {
+	background-color: var(--sn-stylekit-secondary-background-color, #f6f8fa);
+}
+
+/* tooltipped */
+.vditor-tooltipped::after {
+	color: #eaecef;
+	background-color: #3b3e43;
+}
+
+.vditor-tooltipped__n::after,
+.vditor-tooltipped__ne::after,
+.vditor-tooltipped__nw::after {
+	left: auto;
+	right: 50%;
+	top: 100%;
+	bottom: auto;
+	margin-top: 5px;
+	margin-bottom: auto;
+}
+
+.vditor-tooltipped__n::before,
+.vditor-tooltipped__ne::before,
+.vditor-tooltipped__nw::before {
+	top: auto;
+	right: 50%;
+	left: auto;
+	bottom: -5px;
+	margin-right: -5px;
+	border-top-color: transparent;
+	border-bottom-color: #3b3e43;
+}
+
+.vditor-tooltipped__ne::after {
+	right: auto;
+	left: 50%;
+	margin-left: -15px;
+}
+
+/* hljs */
+#vditor .hljs {
+	display: block;
+	overflow-x: auto;
+	padding: 0.5em;
+	background-color: var(--sn-stylekit-contrast-background-color, #f8f8f8);
+	color: var(--textarea-text-color);
+}
+
+#vditor .hljs-comment,
+#vditor .hljs-quote {
+	color: #998;
+	font-style: italic;
+}
+
+#vditor .hljs-keyword,
+#vditor .hljs-selector-tag,
+#vditor .hljs-subst {
+	color: var(--sn-stylekit-info-color, #888);
+	font-weight: bold;
+}
+
+#vditor .hljs-number,
+#vditor .hljs-literal,
+#vditor .hljs-variable,
+#vditor .hljs-template-variable,
+#vditor .hljs-tag .hljs-attr {
+	color: var(--sn-stylekit-success-color, #008080);
+}
+
+#vditor .hljs-string,
+#vditor .hljs-doctag {
+	color: var(--sn-stylekit-warning-color, #d14);
+}
+
+#vditor .hljs-title,
+#vditor .hljs-section,
+#vditor .hljs-selector-id {
+	color: var(--sn-stylekit-danger-color, #900);
+	font-weight: bold;
+}
+
+#vditor .hljs-subst {
+	font-weight: normal;
+}
+
+#vditor .hljs-type,
+#vditor .hljs-class .hljs-title {
+	color: var(--sn-stylekit-accessory-tint-color-1, #458);
+	font-weight: bold;
+}
+
+#vditor .hljs-tag,
+#vditor .hljs-name,
+#vditor .hljs-attribute {
+	color: #000080;
+	color: var(--sn-stylekit-accessory-tint-color-2, #009926);
+	font-weight: normal;
+}
+
+#vditor .hljs-regexp,
+#vditor .hljs-link {
+	color: var(--sn-stylekit-accessory-tint-color-3, #009926);
+}
+
+#vditor .hljs-symbol,
+#vditor .hljs-bullet {
+	color: var(--sn-stylekit-accessory-tint-color-4, #990073);
+}
+
+#vditor .hljs-built_in,
+#vditor .hljs-builtin-name {
+	color: var(--sn-stylekit-accessory-tint-color-5, #0086b3);
+}
+
+#vditor .hljs-meta {
+	color: #999;
+	font-weight: bold;
+}
+
+#vditor .hljs-deletion {
+	background: #fdd;
+}
+
+#vditor .hljs-addition {
+	background: #dfd;
+}
+
+#vditor .hljs-emphasis {
+	font-style: italic;
+}
+
+#vditor .hljs-strong {
+	font-weight: bold;
+}
+
+/* scrollbar */
+.windows-web ::-webkit-scrollbar,
+.windows-desktop ::-webkit-scrollbar,
+.linux-web ::-webkit-scrollbar,
+.linux-desktop ::-webkit-scrollbar,
+.force-custom-scrollbar ::-webkit-scrollbar {
+	width: 14px;
+	height: 18px;
+	border-left: none;
+}
+
+.windows-web ::-webkit-scrollbar-thumb,
+.windows-desktop ::-webkit-scrollbar-thumb,
+.linux-web ::-webkit-scrollbar-thumb,
+.linux-desktop ::-webkit-scrollbar-thumb,
+.force-custom-scrollbar ::-webkit-scrollbar-thumb {
+	border: 4px solid rgba(0, 0, 0, 0);
+	background-clip: padding-box;
+	-webkit-border-radius: 10px;
+	background-color: var(--sn-stylekit-scrollbar-thumb-color, #dfdfdf);
+	-webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, .05), inset 1px 1px 0px rgba(0, 0, 0, .05);
+	cursor: default;
+}
+
+.windows-web ::-webkit-scrollbar-button,
+.windows-desktop ::-webkit-scrollbar-button,
+.linux-web ::-webkit-scrollbar-button,
+.linux-desktop ::-webkit-scrollbar-button,
+.force-custom-scrollbar ::-webkit-scrollbar-button {
+	width: 0;
+	height: 0;
+	display: none
+}
+
+.windows-web ::-webkit-scrollbar-corner,
+.windows-desktop ::-webkit-scrollbar-corner,
+.linux-web ::-webkit-scrollbar-corner,
+.linux-desktop ::-webkit-scrollbar-corner,
+.force-custom-scrollbar ::-webkit-scrollbar-corner {
+	background-color: rgba(0, 0, 0, 0)
+}
