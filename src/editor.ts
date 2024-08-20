@@ -63,20 +63,17 @@ export default class Editor {
             }
         }
 
-        this.vditor = new VditorEditor(
-            id,
-            this.editorKit?.isRunningInMobileApplication() || false,
-            {
-                input: (text: string) => {
-                    if (this.isNoteLocked) {
-                        return
-                    }
-                    this.editorKit?.onEditorValueChanged(text)
-                    this.updateVditorMode()
-                },
-                after: editorInit,
-                mode: this.vditorMode,
-            })
+        this.vditor = new VditorEditor(id, {
+            input: (text: string) => {
+                if (this.isNoteLocked) {
+                    return
+                }
+                this.editorKit?.onEditorValueChanged(text)
+                this.updateVditorMode()
+            },
+            after: editorInit,
+            mode: this.vditorMode,
+        })
     }
 
     updateVditorMode() {

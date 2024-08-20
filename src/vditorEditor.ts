@@ -7,6 +7,7 @@ const toolbar = {
     'italic',
     'strike',
     'link',
+    'emoji',
     '|',
     'list',
     'ordered-list',
@@ -26,26 +27,32 @@ const toolbar = {
     'undo',
     'redo',
     '|',
-    'edit-mode',
     // 'fullscreen',
-    // '|',
-    {
-      name: 'more',
-      toolbar: [
-        'preview',
-        'emoji',
-        'export',
-      ],
-    }],
-  mobile: [
-    'link',
+    'preview',
     'edit-mode',
+    'export',
+  ],
+  mobile: [
+    'emoji',
+    'insert-after',
+    'undo',
+    'redo',
     {
       name: 'more',
       toolbar: [
+        'headings',
+        'bold',
+        'italic',
+        'link',
+
+        'check',
+        'outdent',
+        'indent',
+
         'insert-after',
-        'fullscreen',
-        'emoji',
+        'insert-before',
+        // 'fullscreen',
+        'edit-mode',
         'preview',
       ],
     },
@@ -54,7 +61,8 @@ const toolbar = {
 
 export default class VditorEditor {
   editor: Vditor
-  constructor(id: string, isRunningInMobileApplication: boolean, options?: IOptions) {
+  constructor(id: string, options?: IOptions) {
+    const isMobile = window.innerWidth <= 768
     const defaultOptions: IOptions = {
       cdn: './assets/vditor',
       typewriterMode: true,
@@ -66,7 +74,7 @@ export default class VditorEditor {
       height: '100%',
       icon: 'material',
       counter: {
-        enable: true,
+        enable: !isMobile,
         type: 'text',
       },
       preview: {
@@ -84,7 +92,7 @@ export default class VditorEditor {
         //   current: 'dark'
         // },
       },
-      toolbar: isRunningInMobileApplication ? toolbar.mobile : toolbar.web,
+      toolbar: isMobile ? toolbar.mobile : toolbar.web,
       tab: '\t',
       // height: window.innerHeight,
       value: '',

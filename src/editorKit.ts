@@ -206,8 +206,7 @@ export default class EditorKit {
 
     public isRunningInMobileApplication(): boolean {
         //  not match 'native-mobile-web'
-        // return this.componentRelay!.isRunningInMobileApplication()
-        return this.componentRelay?.environment?.includes('mobile') || false
+        return this.componentRelay!.isRunningInMobileApplication()
     }
 
     public getItemAppDataValue(key: string): any {
