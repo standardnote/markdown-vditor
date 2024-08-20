@@ -61,12 +61,6 @@ body {
 	background-color: var(--sn-stylekit-secondary-background-color, #f6f8fa);
 }
 
-@media screen and (max-width: 768px) {
-    .vditor-toolbar__item {
-        padding: 0 12px;
-    }
-}
-
 /* tooltipped */
 .vditor-tooltipped::after {
 	color: #eaecef;

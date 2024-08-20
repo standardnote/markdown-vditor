@@ -29,7 +29,7 @@ interface EditorKitDelegate {
 /**
  * @standardnotes/editor-kit
  */
-export default class EditorKit {
+export class EditorKit {
     private componentRelay?: ComponentRelay
     private note?: any
     private ignoreNextTextChange?: boolean
@@ -211,6 +211,11 @@ export default class EditorKit {
 
     public getItemAppDataValue(key: string): any {
         return this.note && this.componentRelay!.getItemAppDataValue(this.note, key)
+    }
+
+    public sendCustomEvent(action: string, data: any, callback?: (data: any) => void): void {
+        // @ts-ignore
+        this.componentRelay!.sendCustomEvent(action, data, callback)
     }
 }
 

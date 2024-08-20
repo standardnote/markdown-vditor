@@ -1,5 +1,5 @@
 import VditorEditor from './vditorEditor'
-import EditorKit from './editorKit'
+import { EditorKit } from './editorKit'
 
 export default class Editor {
     vditor: VditorEditor | undefined
@@ -73,6 +73,12 @@ export default class Editor {
             },
             after: editorInit,
             mode: this.vditorMode,
+            focus: () => {
+                this.editorKit?.sendCustomEvent('focus', {})
+            },
+            blur: () => {
+                this.editorKit?.sendCustomEvent('blur', {})
+            }
         })
     }
 
