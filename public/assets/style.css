@@ -4,6 +4,10 @@ body {
 	margin: 0;
 }
 
+a {
+	color: var(--sn-stylekit-info-color, #4285f4);
+}
+
 #vditor.vditor {
 	--border-color: var(--sn-stylekit-border-color, #d1d5da);
 	--second-color: var(--sn-stylekit-neutral-color, rgba(88, 96, 105, 0.36));
