@@ -65,6 +65,11 @@ a {
 	background-color: var(--sn-stylekit-secondary-background-color, #f6f8fa);
 }
 
+/* hide pdf */
+#vditor button[data-type="pdf"] {
+	display: none;
+}
+
 /* tooltipped */
 .vditor-tooltipped::after {
 	color: #eaecef;
