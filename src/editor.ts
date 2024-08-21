@@ -1,13 +1,23 @@
 import VditorEditor from './vditorEditor'
 import { EditorKit } from './editorKit'
 
+interface Status {
+    mode: IOptions['mode']
+    content: string
+    locked: boolean
+    outline: boolean
+}
+
 export default class Editor {
     vditor: VditorEditor | undefined
     editorKit: EditorKit | undefined
     isEditorInit = false
-    isNoteLocked = false
-    rawText = ''
-    vditorMode: IOptions['mode'] = 'ir'
+    status: Status = {
+        content: '',
+        mode: 'ir',
+        locked: false,
+        outline: false,
+    }
 
     constructor(id: string) {
         this.configureEditorKit()
@@ -22,20 +32,28 @@ export default class Editor {
                 }
             },
             onNoteLockToggle: (isLocked: boolean) => {
-                this.isNoteLocked = isLocked
+                this.status.locked = isLocked
                 if (this.isEditorInit) {
-                    this.vditor!.toggleLock(this.isNoteLocked)
+                    this.vditor!.toggleLock(this.status.locked)
                 }
             },
             onNoteValueChange: async (note: any) => {
-                this.vditorMode = this.editorKit?.getComponentDataValueForKey('mode')
+                this.status.mode = this.editorKit?.getComponentDataValueForKey('mode') || 'ir'
+                this.status.outline = this.editorKit?.getComponentDataValueForKey('outline') || false
             },
             setEditorRawText: async (rawText: string) => {
                 if (this.isEditorInit) {
                     this.vditor!.editor.setValue(rawText)
+                    if (this.status.mode !== this.vditor!.editor.getCurrentMode()) {
+                        this.vditor!.setEditMode(this.status.mode)
+                    }
+                    if (this.status.outline !== this.vditor!.editor.vditor.options.outline!.enable) {
+                        this.status.outline = !this.status.outline
+                        this.vditor!.toggleOutline()
+                    }
                 } else {
-                    this.rawText = rawText
-                    this.isNoteLocked = this.getNoteLockState()
+                    this.status.content = rawText
+                    this.status.locked = this.getNoteLockState()
                 }
             },
             onThemesChange: () => {
@@ -49,45 +67,53 @@ export default class Editor {
     }
 
     configureEditor(id: string) {
-        const editorInit = () => {
-            if (!this.isEditorInit) {
-                this.isEditorInit = true
-                if (this.rawText) {
-                    this.vditor?.editor.setValue(this.rawText)
-                    // vditor locked
-                    const isLocked = this.getNoteLockState()
-                    isLocked && this.vditor?.editor.disabled()
-                    // vditor mode
-                    this.vditorMode !== 'ir' && this.vditor?.setVditorMode(this.vditorMode)
-                }
-            }
-        }
-
         this.vditor = new VditorEditor(id, {
             input: (text: string) => {
-                if (this.isNoteLocked) {
+                if (this.status.locked) {
                     return
                 }
                 this.editorKit?.onEditorValueChanged(text)
-                this.updateVditorMode()
+                // this.updateVditorMode()
             },
-            after: editorInit,
-            mode: this.vditorMode,
+            after: () => {
+                if (!this.isEditorInit) {
+                    this.isEditorInit = true
+
+                    if (this.status.content) { // null
+                        this.vditor?.editor.setValue(this.status.content)
+                        this.getNoteLockState() && this.vditor?.editor.disabled()
+                        this.vditor?.setEditMode(this.status.mode)
+                    }
+
+                    document.querySelectorAll('button[data-mode]')
+                        .forEach(button => button.addEventListener('click', e => this.updateVditorMode()))
+
+                    document.querySelector('button[data-type="outline"]')?.addEventListener('click', e => {
+                        this.status.outline = document.querySelector('button[data-type="outline"]')?.classList.contains('vditor-menu--current') || false
+                        this.editorKit?.setComponentDataValueForKey('outline', this.status.outline)
+                    })
+                }
+            },
             focus: () => {
                 this.editorKit?.sendCustomEvent('focus', {})
             },
             blur: () => {
                 this.editorKit?.sendCustomEvent('blur', {})
-            }
+            },
+
+            mode: this.status.mode,
+            outline: {
+                enable: this.status.outline,
+                position: 'right',
+            },
         })
     }
 
     updateVditorMode() {
         const currentMode = this.vditor?.editor.getCurrentMode()
-        if (currentMode !== this.vditorMode) {
-            this.vditorMode = currentMode
+        if (currentMode && this.status.mode !== currentMode) {
+            this.status.mode = currentMode
             this.editorKit?.setComponentDataValueForKey('mode', currentMode)
-            this.vditor?.setVditorMode(this.vditorMode)
         }
     }
 

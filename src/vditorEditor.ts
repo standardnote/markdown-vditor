@@ -28,6 +28,7 @@ const toolbar = {
     'redo',
     '|',
     // 'fullscreen',
+    'outline',
     'preview',
     'edit-mode',
     'export',
@@ -72,7 +73,7 @@ export default class VditorEditor {
       mode: 'ir',
       width: '100%',
       height: '100%',
-      icon: 'material',
+      icon: 'ant', // ant | material
       counter: {
         enable: !isMobile,
         type: 'text',
@@ -93,6 +94,10 @@ export default class VditorEditor {
         // },
       },
       toolbar: isMobile ? toolbar.mobile : toolbar.web,
+      outline: {
+        enable: false,
+        position: 'right',
+      },
       tab: '\t',
       // height: window.innerHeight,
       value: '',
@@ -111,7 +116,12 @@ export default class VditorEditor {
     }
   }
 
-  setVditorMode(mode: IOptions['mode']) {
+  toggleOutline() {
+    const button = document.querySelector('button[data-type="outline"]') as HTMLElement | null
+    button && button.click()
+  }
+
+  setEditMode(mode: IOptions['mode']) {
     const button = document.querySelector(`button[data-mode="${mode}"]`) as HTMLElement | null
     button && button.click()
   }

@@ -66,7 +66,7 @@ export class EditorKit {
              * TODO: If note has changed, release previous temp object URLs.
              */
             let isNewNoteLoad = true
-            if (this.note && this.note.uuid == note.uuid) {
+            if (this.note && this.note.uuid === note.uuid) {
                 isNewNoteLoad = false
             }
 
