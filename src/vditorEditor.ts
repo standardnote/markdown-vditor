@@ -28,7 +28,7 @@ const toolbar = {
       toolbar: [
         'quote',
         'line',
-        
+
         'outdent',
         'indent',
 
@@ -59,7 +59,6 @@ const toolbar = {
 
         'insert-after',
         'insert-before',
-        // 'fullscreen',
         'preview',
       ],
     },
@@ -68,7 +67,9 @@ const toolbar = {
 
 export default class VditorEditor {
   editor: Vditor
-  constructor(id: string, options?: IOptions) {
+  init: boolean
+  constructor(id: string, options: IOptions, fn: () => void) {
+    this.init = false
     const isMobile = window.innerWidth < 768
     const defaultOptions: IOptions = {
       cdn: './assets/vditor',
@@ -106,12 +107,17 @@ export default class VditorEditor {
       },
       tab: '\t',
       // height: window.innerHeight,
-      value: '',
+      after: () => {
+        if (!this.init) {
+          this.init = true
+          fn()
+        }
+      }
     }
     if (options) {
       Object.assign(defaultOptions, options)
     }
-    this.editor = new Vditor(document.getElementById(id) as HTMLElement, defaultOptions)
+    this.editor = new Vditor(id, defaultOptions)
   }
 
   toggleLock(isNoteLocked: boolean) {
