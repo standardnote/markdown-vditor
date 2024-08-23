@@ -182,6 +182,24 @@ export class EditorKit {
         this.componentRelay!.saveItemWithPresave(note, presave)
     }
 
+    public saveItemMetadata(key: string, value: string): void {
+        if (!this.note) {
+            return
+        }
+
+        const note = this.note
+        this.componentRelay!.saveItemWithPresave(note, () => {
+            note.clientData = {
+              ...note.clientData,
+              [key]: value,
+            };
+          });
+    }
+
+    public getItemMetadata(key: string): any {
+        return this.note?.clientData?.[key] || null
+    }
+
     /**
      * Gets the current platform where the component is running.
      */

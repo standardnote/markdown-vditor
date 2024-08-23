@@ -69,7 +69,7 @@ const toolbar = {
 export default class VditorEditor {
   editor: Vditor
   constructor(id: string, options?: IOptions) {
-    const isMobile = window.innerWidth <= 768
+    const isMobile = window.innerWidth < 768
     const defaultOptions: IOptions = {
       cdn: './assets/vditor',
       typewriterMode: true,

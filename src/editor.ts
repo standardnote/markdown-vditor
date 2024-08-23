@@ -39,7 +39,9 @@ export default class Editor {
             },
             onNoteValueChange: async (note: any) => {
                 this.status.mode = this.editorKit?.getComponentDataValueForKey('mode') || 'ir'
-                this.status.outline = this.editorKit?.getComponentDataValueForKey('outline') || false
+                // this.status.outline = this.editorKit?.getComponentDataValueForKey('outline') || false
+                // get outline from meta data
+                this.status.outline = this.editorKit?.getItemMetadata('outline') === 'true' || false
             },
             setEditorRawText: async (rawText: string) => {
                 if (this.isEditorInit) {
@@ -90,7 +92,9 @@ export default class Editor {
 
                     document.querySelector('button[data-type="outline"]')?.addEventListener('click', e => {
                         this.status.outline = document.querySelector('button[data-type="outline"]')?.classList.contains('vditor-menu--current') || false
-                        this.editorKit?.setComponentDataValueForKey('outline', this.status.outline)
+                        // this.editorKit?.setComponentDataValueForKey('outline', this.status.outline)
+                        // save outline to meta data
+                        this.editorKit?.saveItemMetadata('outline', this.status.outline.toString()) || false
                     })
                 }
             },
